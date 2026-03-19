@@ -1,0 +1,18 @@
+﻿
+============================================================
+[LINT RUNNER] Unified Linting
+============================================================
+Project: C:\Users\gauta\OneDrive\Desktop\Capstone Project\Crop Yeild Prediction\KrishiSaarthi
+Time: 2026-02-16 20:34:10
+Type: unknown
+Linters: 0
+------------------------------------------------------------
+No linters found for this project type.
+{
+  "script": "lint_runner",
+  "project": "C:\\Users\\gauta\\OneDrive\\Desktop\\Capstone Project\\Crop Yeild Prediction\\KrishiSaarthi",
+  "type": "unknown",
+  "checks": [],
+  "passed": true,
+  "message": "No linters configured"
+}

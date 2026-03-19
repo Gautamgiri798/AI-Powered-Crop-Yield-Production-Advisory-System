@@ -1,0 +1,415 @@
+/*@import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+@import "leaflet/dist/leaflet.css";
+ @import "leaflet-draw/dist/leaflet.draw.css";
+@import "leaflet-control-geocoder/dist/Control.Geocoder.css";*/
+/*@import url("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+@import url("https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css");
+@import url("https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css");*/
+
+@import url("https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css");
+@import url("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+@import url("https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css");
+
+@font-face {
+  font-family: 'GC Fodax';
+  src: url('/fonts/gcfodax.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Stitch Design System - Light Mode */
+  --background: hsl(140, 20%, 98%);
+  --foreground: hsl(150, 20%, 10%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(150, 20%, 10%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(150, 20%, 10%);
+  --primary: hsl(142, 71%, 45%);
+  /* #22C55E - Primary Green */
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(142, 76%, 36%);
+  /* #16A34A - Hover Green */
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(140, 10%, 95%);
+  --muted-foreground: hsl(140, 10%, 45%);
+  --accent: hsl(45, 93%, 55%);
+  /* Warm amber for alerts */
+  --accent-foreground: hsl(40, 30%, 15%);
+  --destructive: hsl(0, 72%, 51%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(140, 15%, 90%);
+  --input: hsl(140, 10%, 96%);
+  --ring: hsl(142, 71%, 45%);
+  --chart-1: hsl(142, 71%, 45%);
+  --chart-2: hsl(45, 93%, 55%);
+  --chart-3: hsl(0, 72%, 51%);
+  --chart-4: hsl(200, 80%, 55%);
+  --chart-5: hsl(280, 70%, 55%);
+  --sidebar-background: hsl(0, 0%, 100%);
+  --sidebar-foreground: hsl(150, 20%, 25%);
+  --sidebar-primary: hsl(142, 71%, 45%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(142, 76%, 36%);
+  --sidebar-accent-foreground: hsl(0, 0%, 100%);
+  --sidebar-border: hsl(140, 15%, 90%);
+  --sidebar-ring: hsl(142, 71%, 45%);
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: "SF Mono", Menlo, monospace;
+  --radius: 0.5rem;
+  /* Stitch uses ROUND_EIGHT = 8px */
+}
+
+
+.dark {
+  /* Stitch Design System - Dark Mode */
+  --background: hsl(156, 14%, 7%);
+  --foreground: hsl(220, 14%, 91%);
+  --card: hsl(150, 18%, 9%);
+  --card-foreground: hsl(220, 14%, 91%);
+  --popover: hsl(150, 18%, 9%);
+  --popover-foreground: hsl(220, 14%, 91%);
+  --primary: hsl(142, 71%, 45%);
+  /* #22C55E */
+  --primary-foreground: hsl(156, 14%, 7%);
+  --secondary: hsl(142, 76%, 36%);
+  /* #16A34A */
+  --secondary-foreground: hsl(220, 14%, 91%);
+  --muted: hsl(150, 18%, 14%);
+  --muted-foreground: hsl(218, 16%, 65%);
+  --accent: hsl(45, 93%, 55%);
+  --accent-foreground: hsl(40, 30%, 10%);
+  --destructive: hsl(0, 72%, 51%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(150, 18%, 15%);
+  --input: hsl(150, 18%, 13%);
+  --ring: hsl(142, 71%, 45%);
+  --sidebar-background: hsl(156, 14%, 7%);
+  --sidebar-foreground: hsl(218, 16%, 65%);
+  --sidebar-primary: hsl(142, 71%, 45%);
+  --sidebar-primary-foreground: hsl(156, 14%, 7%);
+  --sidebar-accent: hsl(142, 76%, 36%);
+  --sidebar-accent-foreground: hsl(220, 14%, 91%);
+  --sidebar-border: hsl(150, 18%, 15%);
+  --sidebar-ring: hsl(142, 71%, 45%);
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(142, 60%, 25%) 100%);
+}
+
+.leaflet-container {
+  height: 100%;
+  border-radius: var(--radius);
+  z-index: 1;
+}
+
+
+.chat-bounce {
+  animation: chatBounce 2s infinite;
+}
+
+@keyframes chatBounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-10px);
+  }
+
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes navItemGlow {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+
+@keyframes sidebarActivePulse {
+  0%, 100% { transform: translateY(-50%) scaleY(1); opacity: 1; filter: brightness(1); }
+  50% { transform: translateY(-50%) scaleY(1.3); opacity: 0.9; filter: brightness(1.5); }
+}
+
+@keyframes activeScan {
+  0% { transform: translateY(-100%) rotate(0deg); opacity: 0; }
+  20% { opacity: 0.5; }
+  50% { opacity: 1; }
+  80% { opacity: 0.5; }
+  100% { transform: translateY(100%) rotate(360deg); opacity: 0; }
+}
+
+@keyframes activePulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.1), inset 0 0 10px rgba(34, 197, 94, 0.05); }
+  50% { box-shadow: 0 0 30px rgba(34, 197, 94, 0.25), inset 0 0 20px rgba(34, 197, 94, 0.1); }
+}
+
+.active-nav-item-bg {
+  animation: activePulseGlow 4s infinite ease-in-out;
+}
+
+.active-item-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(180deg, transparent, rgba(34, 197, 94, 0.1), transparent);
+  pointer-events: none;
+  animation: activeScan 4s infinite linear;
+}
+
+.nav-item-glow-effect {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.nav-item-glow-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.08), transparent);
+  animation: navItemGlow 3s infinite;
+}
+
+.voice-recording {
+  animation: voicePulse 1.5s infinite;
+}
+
+@keyframes voicePulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 3fr 1fr;
+    /* 2-column on small desktop */
+  }
+}
+
+@media (min-width: 1280px) {
+  .dashboard-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+    /* 3-column on large desktop */
+  }
+}
+
+
+.ndvi-chart {
+  background: linear-gradient(135deg, hsl(120, 40%, 95%) 0%, hsl(120, 30%, 90%) 100%);
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+/* Premium Futuristic Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020604;
+  border-left: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #22C55E, #10B981);
+  border-radius: 20px;
+  border: 2px solid #020604;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #25ef77;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+}
+
+/* Specific Thin Scrollbar for nested containers */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.3);
+  border: none;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.6);
+}
+
+/* GC Fodax (Custom Font) Utility Class */
+.font-fodax {
+  font-family: 'GC Fodax', 'GC Fodax Bold', 'GC-Fodax-Bold', 'GC Fodex', 'GCFodax', system-ui, sans-serif !important;
+  /* Reset weight/style just in case the OS font is strictly single-weight */
+  font-weight: normal !important;
+  font-style: normal !important;
+}
+
+/* Chrome Autofill Fix for Dark Mode */
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover, 
+.dark input:-webkit-autofill:focus, 
+.dark input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px hsl(156, 14%, 7%) inset !important;
+    -webkit-text-fill-color: hsl(220, 14%, 91%) !important;
+}
+
+/* Invert Calendar Icon for Dark Inputs */
+.invert-calendar-icon::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PRINT OPTIMIZATIONS - PERFECT PDF OUTPUT
+   ───────────────────────────────────────────────────────────────────────────── */
+@media print {
+  /* Hide UI elements that shouldn't be in a report */
+  aside, 
+  header, 
+  nav,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset layout for full page usage */
+  body, html {
+    background: #020604 !important; /* Force true black dashboard background */
+    color: white !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  /* Force background colors and gradients to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Adjust Containers */
+  .container, 
+  .dashboard-grid {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* Keep cards looking good but remove shadows that can look muddy */
+  .card, div[class*="rounded-"] {
+    break-inside: avoid;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    box-shadow: none !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* Ensure text is legible */
+  h1, h2, h3, h4, p, span {
+    color: white !important;
+  }
+
+  /* Scale maps and charts if necessary */
+  .leaflet-container {
+    height: 500px !important; /* Prevent map from collapsing */
+    break-inside: avoid;
+  }
+
+  /* Specific fix for the user's screenshot - remove white margins */
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  /* Adjust page layout */
+  body {
+    margin: 1cm;
+  }
+}
