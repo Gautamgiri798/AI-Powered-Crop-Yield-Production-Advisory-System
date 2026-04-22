@@ -32,6 +32,7 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    allowedHosts: ["clever-cougars-stop.loca.lt", "localhost", "127.0.0.1"],
     fs: {
       strict: true,
       deny: ["**/.*"],
